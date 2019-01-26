@@ -11,7 +11,7 @@ const theme = createMuiTheme({
   palette: {
     primary: pink,
     secondary: {
-      main: '#64ffda',
+      main: '#ffff8d',
     },
   },
   typography: {

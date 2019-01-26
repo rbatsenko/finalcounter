@@ -3,16 +3,24 @@ import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-//import Grid from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import SwipeableViews from 'react-swipeable-views';
+import Zoom from '@material-ui/core/Zoom';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
+//Custom Components
+import Bloc from './components/Bloc';
+import Participants from './components/Participants';
+
 import { withStyles } from '@material-ui/core/styles';
 
-function TabContainer({ children, dir }) {
+function TabContainer({ children, dir, noPadding }) {
   return (
-    <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
+    <Typography component="div" dir={dir} style={ noPadding ? { padding: 0 } : { padding: 24 }}>
       {children}
     </Typography>
   );
@@ -27,35 +35,80 @@ const styles = theme => ({
   },
   layout: {
     width: 'auto',
-    [theme.breakpoints.up(1280 + theme.spacing.unit * 2 * 2)]: {
-      width: 1170,
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    /*[theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
+      width: 1100,
       marginLeft: 'auto',
       marginRight: 'auto',
-    },
+    },*/
   },
-  wrapper: {
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  tabsNav: {
+    borderBottom: '1px solid #e8e8e8',
     marginBottom: theme.spacing.unit * 3,
-    [theme.breakpoints.up(1280 + theme.spacing.unit * 3 * 2)]: {
-      marginTop: theme.spacing.unit * 6,
-      marginBottom: theme.spacing.unit * 6,
-    },
+    overflow: 'visible',
+  },
+  tabScroller: {
+    overflowX: 'visible',
   },
   label: {
     minHeight: theme.spacing.unit * 8,
-    color: 'white',
   },
   tabIndicator: {
     height: 5,
+    bottom: -3,
+  },
+  addBtnContainer: {
+    textAlign: 'right',
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 3,
+  },
+  noPadding: {
+    padding: 0,
   }
 });
 
 class App extends Component {
   state = {
     activeTab: 0,
+    addBtnShown: true,
+    participants: [],
+    results: [
+      {
+        atpts: 1,
+        zoneAtpt: 0,
+        topAtpt: 0,
+      },
+      {
+        atpts: 2,
+        zoneAtpt: 0,
+        topAtpt: 0,
+      },
+      {
+        atpts: 3,
+        zoneAtpt: 0,
+        topAtpt: 0,
+      },
+      {
+        atpts: 4,
+        zoneAtpt: 0,
+        topAtpt: 0,
+      },
+    ]
   };
 
   handleChange = (event, activeTab) => {
     this.setState({ activeTab });
+    if (activeTab === 0) {
+      this.setState({ addBtnShown: true })
+    } else {
+      this.setState({ addBtnShown: false })
+    }
   };
 
   handleChangeIndex = index => {
@@ -64,6 +117,7 @@ class App extends Component {
 
   render() {
     const { classes, theme } = this.props;
+    const { results, addBtnShown } = this.state;
 
     return (
       <React.Fragment>
@@ -73,37 +127,56 @@ class App extends Component {
             <Typography variant="h6" color="inherit" noWrap className={classes.logo}>
               <span role="img" aria-label="Final Counter Logo">👑</span> Final Counter
             </Typography>
-            <Tabs
-              value={this.state.activeTab}
-              indicatorColor="secondary"
-              textColor="secondary"
-              onChange={this.handleChange}
-              classes={{
-                indicator: classes.tabIndicator
-              }}
-            >
-              <Tab label="Bloc #1" className={classes.label} />
-              <Tab label="Bloc #2" className={classes.label} />
-              <Tab label="Bloc #3" className={classes.label} />
-              <Tab label="Bloc #4" className={classes.label} />
-              <Tab label="Results" className={classes.label} />
-            </Tabs>
           </Toolbar>
         </AppBar>
-        <main className={classes.layout}>
-          <Paper square className={classes.wrapper}>
-            <SwipeableViews
-              axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-              index={this.state.activeTab}
-              onChangeIndex={this.handleChangeIndex}
-            >
-              <TabContainer dir={theme.direction}>One</TabContainer>
-              <TabContainer dir={theme.direction}>Two</TabContainer>
-              <TabContainer dir={theme.direction}>Three</TabContainer>
-              <TabContainer dir={theme.direction}>Four</TabContainer>
-              <TabContainer dir={theme.direction}>Results</TabContainer>
-            </SwipeableViews>
-          </Paper>
+        <main>
+          <Tabs
+            value={this.state.activeTab}
+            variant="fullWidth"
+            scrollButtons="auto"
+            indicatorColor="primary"
+            textColor="primary"
+            onChange={this.handleChange}
+            classes={{
+              indicator: classes.tabIndicator,
+              root: classes.tabsNav,
+              scroller: classes.tabScroller,
+            }}
+          >
+            <Tab label="Participants" className={classes.label} />
+            <Tab label="Bloc #1" className={classes.label} />
+            <Tab label="Bloc #2" className={classes.label} />
+            <Tab label="Bloc #3" className={classes.label} />
+            <Tab label="Bloc #4" className={classes.label} />
+            <Tab label="Results" className={classes.label} />
+          </Tabs>
+          <div className={classes.layout}>
+            <Grid container spacing={24}>
+              <Grid item xs={12}>
+                <Paper>
+                  <SwipeableViews
+                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                    index={this.state.activeTab}
+                    onChangeIndex={this.handleChangeIndex}
+                  >
+                    <TabContainer dir={theme.direction} ><Participants /></TabContainer>
+                    <TabContainer dir={theme.direction} noPadding ><Bloc results={results[0]} /></TabContainer>
+                    <TabContainer dir={theme.direction} noPadding ><Bloc results={results[1]} /></TabContainer>
+                    <TabContainer dir={theme.direction} noPadding ><Bloc results={results[2]} /></TabContainer>
+                    <TabContainer dir={theme.direction} noPadding ><Bloc results={results[3]} /></TabContainer>
+                    <TabContainer dir={theme.direction} >Results</TabContainer>
+                  </SwipeableViews>
+                </Paper>
+                <div className={classes.addBtnContainer}>
+                  <Zoom in={addBtnShown} mountOnEnter unmountOnExit>
+                    <Fab size="medium" color="primary" aria-label="Add">
+                      <AddIcon />
+                    </Fab>
+                  </Zoom>
+                </div>
+              </Grid>
+            </Grid>
+          </div>
         </main>
       </React.Fragment>
     );
