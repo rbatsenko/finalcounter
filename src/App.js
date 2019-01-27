@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import SwipeableViews from 'react-swipeable-views';
 import Zoom from '@material-ui/core/Zoom';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
@@ -18,9 +17,9 @@ import Participants from './components/Participants';
 
 import { withStyles } from '@material-ui/core/styles';
 
-function TabContainer({ children, dir, noPadding }) {
+function TabContainer({ children, noPadding }) {
   return (
-    <Typography component="div" dir={dir} style={ noPadding ? { padding: 0 } : { padding: 24 }}>
+    <Typography component="div" style={ noPadding ? { padding: 0 } : { padding: 24 }}>
       {children}
     </Typography>
   );
@@ -116,8 +115,8 @@ class App extends Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
-    const { results, addBtnShown } = this.state;
+    const { classes } = this.props;
+    const { results, activeTab, addBtnShown } = this.state;
 
     return (
       <React.Fragment>
@@ -154,18 +153,12 @@ class App extends Component {
             <Grid container spacing={24}>
               <Grid item xs={12}>
                 <Paper>
-                  <SwipeableViews
-                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                    index={this.state.activeTab}
-                    onChangeIndex={this.handleChangeIndex}
-                  >
-                    <TabContainer dir={theme.direction} ><Participants /></TabContainer>
-                    <TabContainer dir={theme.direction} noPadding ><Bloc results={results[0]} /></TabContainer>
-                    <TabContainer dir={theme.direction} noPadding ><Bloc results={results[1]} /></TabContainer>
-                    <TabContainer dir={theme.direction} noPadding ><Bloc results={results[2]} /></TabContainer>
-                    <TabContainer dir={theme.direction} noPadding ><Bloc results={results[3]} /></TabContainer>
-                    <TabContainer dir={theme.direction} >Results</TabContainer>
-                  </SwipeableViews>
+                  { activeTab === 0 && <TabContainer><Participants /></TabContainer> }
+                  { activeTab === 1 && <TabContainer noPadding><Bloc results={results[0]} /></TabContainer> }
+                  { activeTab === 2 && <TabContainer noPadding><Bloc results={results[1]} /></TabContainer> }
+                  { activeTab === 3 && <TabContainer noPadding><Bloc results={results[2]} /></TabContainer> }
+                  { activeTab === 4 && <TabContainer noPadding><Bloc results={results[3]} /></TabContainer> }
+                  { activeTab === 5 && <TabContainer>Results</TabContainer> }
                 </Paper>
                 <div className={classes.addBtnContainer}>
                   <Zoom in={addBtnShown} mountOnEnter unmountOnExit>
