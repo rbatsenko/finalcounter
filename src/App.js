@@ -26,6 +26,9 @@ function TabContainer({ children, noPadding }) {
 }
 
 const styles = theme => ({
+  transition: {
+    transition: 'all .3s ease-in-out',
+  },
   appBar: {
     position: 'relative',
   },
@@ -46,6 +49,11 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
+  },
+  colSmall: {
+    maxWidth: '50%',
+    flexBasis: '50%',
+    marginLeft: '25%',
   },
   tabsNav: {
     borderBottom: '1px solid #e8e8e8',
@@ -114,9 +122,15 @@ class App extends Component {
     this.setState({ activeTab: index });
   };
 
+  handleAddParticipant = () => {
+    this.setState( prevState => ({
+      participants: [...prevState.participants, 'Name Surname']
+    }));
+  }
+
   render() {
     const { classes } = this.props;
-    const { results, activeTab, addBtnShown } = this.state;
+    const { results, activeTab, addBtnShown, participants } = this.state;
 
     return (
       <React.Fragment>
@@ -151,9 +165,11 @@ class App extends Component {
           </Tabs>
           <div className={classes.layout}>
             <Grid container spacing={24}>
-              <Grid item xs={12}>
+              <Grid item xs={12} className={
+                `${classes.transition} ${activeTab === 0 || activeTab === 5 ? classes.colSmall : ''}`
+              }>
                 <Paper>
-                  { activeTab === 0 && <TabContainer><Participants /></TabContainer> }
+                  { activeTab === 0 && <TabContainer><Participants participants={participants} /></TabContainer> }
                   { activeTab === 1 && <TabContainer noPadding><Bloc results={results[0]} /></TabContainer> }
                   { activeTab === 2 && <TabContainer noPadding><Bloc results={results[1]} /></TabContainer> }
                   { activeTab === 3 && <TabContainer noPadding><Bloc results={results[2]} /></TabContainer> }
@@ -162,7 +178,7 @@ class App extends Component {
                 </Paper>
                 <div className={classes.addBtnContainer}>
                   <Zoom in={addBtnShown} mountOnEnter unmountOnExit>
-                    <Fab size="medium" color="primary" aria-label="Add">
+                    <Fab size="medium" color="primary" aria-label="Add" onClick={this.handleAddParticipant}>
                       <AddIcon />
                     </Fab>
                   </Zoom>
