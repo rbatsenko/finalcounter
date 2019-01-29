@@ -54,6 +54,16 @@ const styles = theme => ({
     maxWidth: '50%',
     flexBasis: '50%',
     marginLeft: '25%',
+    [theme.breakpoints.down(992)]: {
+      maxWidth: '75%',
+      flexBasis: '75%',
+      marginLeft: '12.5%',
+    },
+    [theme.breakpoints.down(768)]: {
+      maxWidth: '100%',
+      flexBasis: '100%',
+      marginLeft: 0,
+    },
   },
   tabsNav: {
     borderBottom: '1px solid #e8e8e8',
@@ -124,8 +134,22 @@ class App extends Component {
 
   handleAddParticipant = () => {
     this.setState( prevState => ({
-      participants: [...prevState.participants, 'Name Surname']
-    }));
+      participants: [...prevState.participants, {
+        id: prevState.participants.length === 0 ? 0 : prevState.participants[prevState.participants.length - 1].id + 1, // generate id based on last one
+        name: 'Name Surname',
+      }]
+    }), () => { console.log(this.state.participants) });
+  }
+
+  handleRemoveParticipant = id => {
+    this.setState( prevState => ({
+      participants: [...prevState.participants].filter( participant => participant.id !== id)
+    }),
+    () => console.log(this.state.participants));
+  }
+
+  handleChangeParticipant = (event, id) => {
+    
   }
 
   render() {
@@ -169,7 +193,7 @@ class App extends Component {
                 `${classes.transition} ${activeTab === 0 || activeTab === 5 ? classes.colSmall : ''}`
               }>
                 <Paper>
-                  { activeTab === 0 && <TabContainer><Participants participants={participants} /></TabContainer> }
+                  { activeTab === 0 && <TabContainer><Participants participants={participants} deleteParticipant={this.handleRemoveParticipant} changeParticipant={this.handleChangeParticipant} /></TabContainer> }
                   { activeTab === 1 && <TabContainer noPadding><Bloc results={results[0]} /></TabContainer> }
                   { activeTab === 2 && <TabContainer noPadding><Bloc results={results[1]} /></TabContainer> }
                   { activeTab === 3 && <TabContainer noPadding><Bloc results={results[2]} /></TabContainer> }
