@@ -4,7 +4,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -23,13 +22,10 @@ const Participants = ({ participants, deleteParticipant, changeParticipant }) =>
           </ListItemIcon>
           <TextField
             id="name"
-            value={participant.name}
-            onChange={changeParticipant(participant.id)}
+            defaultValue={participant.name}
+            onChange={(e) => { changeParticipant(participant.id, e.target.value) }}
             margin="dense"
           />
-          {/*<ListItemText
-            primary={participant.name}
-          />*/}
           <ListItemSecondaryAction>
             <IconButton aria-label="Delete" onClick={() => { deleteParticipant(participant.id) }}>
               <DeleteIcon />

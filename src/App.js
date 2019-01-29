@@ -95,28 +95,6 @@ class App extends Component {
     activeTab: 0,
     addBtnShown: true,
     participants: [],
-    results: [
-      {
-        atpts: 1,
-        zoneAtpt: 0,
-        topAtpt: 0,
-      },
-      {
-        atpts: 2,
-        zoneAtpt: 0,
-        topAtpt: 0,
-      },
-      {
-        atpts: 3,
-        zoneAtpt: 0,
-        topAtpt: 0,
-      },
-      {
-        atpts: 4,
-        zoneAtpt: 0,
-        topAtpt: 0,
-      },
-    ]
   };
 
   handleChange = (event, activeTab) => {
@@ -137,24 +115,54 @@ class App extends Component {
       participants: [...prevState.participants, {
         id: prevState.participants.length === 0 ? 0 : prevState.participants[prevState.participants.length - 1].id + 1, // generate id based on last one
         name: 'Name Surname',
+        results: [
+          {
+            top: 0,
+            zone: 0,
+            attTop: 0,
+            attZone: 0,
+          },
+          {
+            top: 1,
+            zone: 1,
+            attTop: 1,
+            attZone: 1,
+          },
+          {
+            top: 0,
+            zone: 0,
+            attTop: 0,
+            attZone: 0,
+          },
+          {
+            top: 0,
+            zone: 0,
+            attTop: 0,
+            attZone: 0,
+          },
+        ],
       }]
-    }), () => { console.log(this.state.participants) });
+    }));
   }
 
   handleRemoveParticipant = id => {
     this.setState( prevState => ({
       participants: [...prevState.participants].filter( participant => participant.id !== id)
-    }),
-    () => console.log(this.state.participants));
+    }));
   }
 
-  handleChangeParticipant = (event, id) => {
-    
+  handleChangeParticipant = (id, newName) => {
+    this.setState( prevState => ({
+      participants: prevState.participants.map( participant => (
+        participant.id === id ? {...participant, name: newName} : participant
+      )),
+    }),
+    () => { console.log(this.state) } );
   }
 
   render() {
     const { classes } = this.props;
-    const { results, activeTab, addBtnShown, participants } = this.state;
+    const { activeTab, addBtnShown, participants } = this.state;
 
     return (
       <React.Fragment>
@@ -194,10 +202,10 @@ class App extends Component {
               }>
                 <Paper>
                   { activeTab === 0 && <TabContainer><Participants participants={participants} deleteParticipant={this.handleRemoveParticipant} changeParticipant={this.handleChangeParticipant} /></TabContainer> }
-                  { activeTab === 1 && <TabContainer noPadding><Bloc results={results[0]} /></TabContainer> }
-                  { activeTab === 2 && <TabContainer noPadding><Bloc results={results[1]} /></TabContainer> }
-                  { activeTab === 3 && <TabContainer noPadding><Bloc results={results[2]} /></TabContainer> }
-                  { activeTab === 4 && <TabContainer noPadding><Bloc results={results[3]} /></TabContainer> }
+                  { activeTab === 1 && <TabContainer noPadding><Bloc participants={participants} blocNr={0} /></TabContainer> }
+                  { activeTab === 2 && <TabContainer noPadding><Bloc participants={participants} blocNr={1} /></TabContainer> }
+                  { activeTab === 3 && <TabContainer noPadding><Bloc participants={participants} blocNr={2} /></TabContainer> }
+                  { activeTab === 4 && <TabContainer noPadding><Bloc participants={participants} blocNr={3} /></TabContainer> }
                   { activeTab === 5 && <TabContainer>Results</TabContainer> }
                 </Paper>
                 <div className={classes.addBtnContainer}>
