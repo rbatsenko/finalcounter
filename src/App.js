@@ -14,6 +14,7 @@ import AddIcon from '@material-ui/icons/Add';
 //Custom Components
 import Bloc from './components/Bloc';
 import Participants from './components/Participants';
+import Results from './components/Results';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -50,10 +51,25 @@ const styles = theme => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
-  colSmall: {
+  colHalf: {
     maxWidth: '50%',
     flexBasis: '50%',
     marginLeft: '25%',
+    [theme.breakpoints.down(992)]: {
+      maxWidth: '75%',
+      flexBasis: '75%',
+      marginLeft: '12.5%',
+    },
+    [theme.breakpoints.down(768)]: {
+      maxWidth: '100%',
+      flexBasis: '100%',
+      marginLeft: 0,
+    },
+  },
+  colThreeFourth: {
+    maxWidth: '75%',
+    flexBasis: '75%',
+    marginLeft: '12.5%',
     [theme.breakpoints.down(992)]: {
       maxWidth: '75%',
       flexBasis: '75%',
@@ -141,6 +157,12 @@ class App extends Component {
             attZone: 0,
           },
         ],
+        finalResults: {
+          tops: 0,
+          zones: 0,
+          attTops: 0,
+          attZones: 0,
+        },
       }]
     }));
   }
@@ -198,7 +220,7 @@ class App extends Component {
           <div className={classes.layout}>
             <Grid container spacing={24}>
               <Grid item xs={12} className={
-                `${classes.transition} ${activeTab === 0 || activeTab === 5 ? classes.colSmall : ''}`
+                `${classes.transition} ${activeTab === 0 ? classes.colHalf : ''} ${activeTab === 5 ? classes.colThreeFourth : ''}`
               }>
                 <Paper>
                   { activeTab === 0 && <TabContainer><Participants participants={participants} deleteParticipant={this.handleRemoveParticipant} changeParticipant={this.handleChangeParticipant} /></TabContainer> }
@@ -206,7 +228,7 @@ class App extends Component {
                   { activeTab === 2 && <TabContainer noPadding><Bloc participants={participants} blocNr={1} /></TabContainer> }
                   { activeTab === 3 && <TabContainer noPadding><Bloc participants={participants} blocNr={2} /></TabContainer> }
                   { activeTab === 4 && <TabContainer noPadding><Bloc participants={participants} blocNr={3} /></TabContainer> }
-                  { activeTab === 5 && <TabContainer>Results</TabContainer> }
+                  { activeTab === 5 && <TabContainer noPadding><Results participants={participants} /></TabContainer> }
                 </Paper>
                 <div className={classes.addBtnContainer}>
                   <Zoom in={addBtnShown} mountOnEnter unmountOnExit>
