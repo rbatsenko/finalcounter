@@ -133,26 +133,26 @@ class App extends Component {
         name: 'Name Surname',
         results: [
           {
-            top: 0,
-            zone: 0,
+            top: false,
+            zone: false,
             attTop: 0,
             attZone: 0,
           },
           {
-            top: 1,
-            zone: 1,
+            top: true,
+            zone: true,
             attTop: 1,
             attZone: 1,
           },
           {
-            top: 0,
-            zone: 0,
+            top: false,
+            zone: false,
             attTop: 0,
             attZone: 0,
           },
           {
-            top: 0,
-            zone: 0,
+            top: false,
+            zone: false,
             attTop: 0,
             attZone: 0,
           },
@@ -178,8 +178,7 @@ class App extends Component {
       participants: prevState.participants.map( participant => (
         participant.id === id ? {...participant, name: newName} : participant
       )),
-    }),
-    () => { console.log(this.state) } );
+    }));
   }
 
   render() {
@@ -198,7 +197,7 @@ class App extends Component {
         </AppBar>
         <main>
           <Tabs
-            value={this.state.activeTab}
+            value={activeTab}
             variant="fullWidth"
             scrollButtons="auto"
             indicatorColor="primary"

@@ -4,8 +4,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import AddIcon from '@material-ui/icons/Add';
-import IconButton from '@material-ui/core/IconButton';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -23,10 +22,10 @@ const Bloc = ({ participants, blocNr, classes }) => (
     <TableHead>
       <TableRow>
         <TableCell>Name</TableCell>
-        <TableCell align="right">Top</TableCell>
-        <TableCell align="right">Zone</TableCell>
-        <TableCell align="right">Top attempts</TableCell>
-        <TableCell align="right">Zone attempts</TableCell>
+        <TableCell align="center">Top</TableCell>
+        <TableCell align="center">Zone</TableCell>
+        <TableCell align="center">Top attempts</TableCell>
+        <TableCell align="center">Zone attempts</TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
@@ -35,15 +34,24 @@ const Bloc = ({ participants, blocNr, classes }) => (
           <TableCell component="th" scope="row" className={classes.cell}>
             {participant.name}
           </TableCell>
-          <TableCell align="right" className={classes.cellBigFont}>
-            {participant.results[blocNr].top}
-            <IconButton color="primary" aria-label="Add top">
-              <AddIcon />
-            </IconButton>
+          <TableCell align="center" className={classes.cellBigFont}>
+            <Checkbox
+              checked={participant.results[blocNr].top}
+              onChange={() => { console.log('checked!'); }}
+              value="Top done"
+              color="primary"
+            />
           </TableCell>
-          <TableCell align="right" className={classes.cellBigFont}>{participant.results[blocNr].zone}</TableCell>
-          <TableCell align="right" className={classes.cellBigFont}>{participant.results[blocNr].attTop}</TableCell>
-          <TableCell align="right" className={classes.cellBigFont}>{participant.results[blocNr].attZone}</TableCell>
+          <TableCell align="center" className={classes.cellBigFont}>
+            <Checkbox
+              checked={participant.results[blocNr].zone}
+              onChange={() => { console.log('checked!'); }}
+              value="Top done"
+              color="primary"
+            />
+          </TableCell>
+          <TableCell align="center" className={classes.cellBigFont}>{participant.results[blocNr].attTop}</TableCell>
+          <TableCell align="center" className={classes.cellBigFont}>{participant.results[blocNr].attZone}</TableCell>
         </TableRow>
       ))}
     </TableBody>
