@@ -17,7 +17,7 @@ const styles = theme => ({
   },
 });
 
-const Bloc = ({ participants, blocNr, classes }) => (
+const Bloc = ({ participants, blocNr, classes, checkZone, checkTop }) => (
   <Table>
     <TableHead>
       <TableRow>
@@ -37,16 +37,16 @@ const Bloc = ({ participants, blocNr, classes }) => (
           <TableCell align="center" className={classes.cellBigFont}>
             <Checkbox
               checked={participant.results[blocNr].top}
-              onChange={() => { console.log('checked!'); }}
-              value="Top done"
+              onChange={(e) => { checkTop(participant.id, blocNr, e.target.checked) }}
+              value="Top"
               color="primary"
             />
           </TableCell>
           <TableCell align="center" className={classes.cellBigFont}>
             <Checkbox
               checked={participant.results[blocNr].zone}
-              onChange={() => { console.log('checked!'); }}
-              value="Top done"
+              onChange={(e) => { checkZone(participant.id, blocNr, e.target.checked) }}
+              value="Zone"
               color="primary"
             />
           </TableCell>

@@ -113,7 +113,7 @@ class App extends Component {
     participants: [],
   };
 
-  handleChange = (event, activeTab) => {
+  handleChangeTab = (event, activeTab) => {
     this.setState({ activeTab });
     if (activeTab === 0) {
       this.setState({ addBtnShown: true })
@@ -122,7 +122,7 @@ class App extends Component {
     }
   };
 
-  handleChangeIndex = index => {
+  handleChangeTabIndex = index => {
     this.setState({ activeTab: index });
   };
 
@@ -133,24 +133,28 @@ class App extends Component {
         name: 'Name Surname',
         results: [
           {
+            nr: 0,
             top: false,
             zone: false,
             attTop: 0,
             attZone: 0,
           },
           {
-            top: true,
-            zone: true,
-            attTop: 1,
-            attZone: 1,
-          },
-          {
+            nr: 1,
             top: false,
             zone: false,
             attTop: 0,
             attZone: 0,
           },
           {
+            nr: 2,
+            top: false,
+            zone: false,
+            attTop: 0,
+            attZone: 0,
+          },
+          {
+            nr: 3,
             top: false,
             zone: false,
             attTop: 0,
@@ -176,9 +180,65 @@ class App extends Component {
   handleChangeParticipant = (id, newName) => {
     this.setState( prevState => ({
       participants: prevState.participants.map( participant => (
-        participant.id === id ? {...participant, name: newName} : participant
+        participant.id === id 
+        ? 
+        {...participant, name: newName}
+        : 
+        participant
       )),
     }));
+  }
+
+  handleCheckZone = (id, blocNr, checked) => {
+    this.setState( 
+      prevState => ({
+        participants: prevState.participants.map( participant => (
+          participant.id === id // modify participant with proper id
+          ? 
+          {
+            ...participant, // leave rest of participants as they are
+            results: participant.results.map( bloc => (
+              bloc.nr === blocNr // modify results for bloc with proper number
+              ?
+              {
+                ...bloc, // leave rest of bloc results as they are
+                zone: checked // change value
+              }
+              :
+              bloc
+            ))
+          }
+          : 
+          participant
+        ))
+      })
+    );
+  }
+
+  handleCheckTop = (id, blocNr, checked) => {
+    this.setState( 
+      prevState => ({
+        participants: prevState.participants.map( participant => (
+          participant.id === id // modify participant with proper id
+          ? 
+          {
+            ...participant, // leave rest of participants as they are
+            results: participant.results.map( bloc => (
+              bloc.nr === blocNr // modify results for bloc with proper number
+              ?
+              {
+                ...bloc, // leave rest of bloc results as they are
+                top: checked // change value
+              }
+              :
+              bloc
+            ))
+          }
+          : 
+          participant
+        ))
+      })
+    );
   }
 
   render() {
@@ -202,7 +262,7 @@ class App extends Component {
             scrollButtons="auto"
             indicatorColor="primary"
             textColor="primary"
-            onChange={this.handleChange}
+            onChange={this.handleChangeTab}
             classes={{
               indicator: classes.tabIndicator,
               root: classes.tabsNav,
@@ -223,10 +283,10 @@ class App extends Component {
               }>
                 <Paper>
                   { activeTab === 0 && <TabContainer><Participants participants={participants} deleteParticipant={this.handleRemoveParticipant} changeParticipant={this.handleChangeParticipant} /></TabContainer> }
-                  { activeTab === 1 && <TabContainer noPadding><Bloc participants={participants} blocNr={0} /></TabContainer> }
-                  { activeTab === 2 && <TabContainer noPadding><Bloc participants={participants} blocNr={1} /></TabContainer> }
-                  { activeTab === 3 && <TabContainer noPadding><Bloc participants={participants} blocNr={2} /></TabContainer> }
-                  { activeTab === 4 && <TabContainer noPadding><Bloc participants={participants} blocNr={3} /></TabContainer> }
+                  { activeTab === 1 && <TabContainer noPadding><Bloc participants={participants} blocNr={0} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} /></TabContainer> }
+                  { activeTab === 2 && <TabContainer noPadding><Bloc participants={participants} blocNr={1} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} /></TabContainer> }
+                  { activeTab === 3 && <TabContainer noPadding><Bloc participants={participants} blocNr={2} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} /></TabContainer> }
+                  { activeTab === 4 && <TabContainer noPadding><Bloc participants={participants} blocNr={3} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} /></TabContainer> }
                   { activeTab === 5 && <TabContainer noPadding><Results participants={participants} /></TabContainer> }
                 </Paper>
                 <div className={classes.addBtnContainer}>
