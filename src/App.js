@@ -16,9 +16,12 @@ import Bloc from './components/Bloc';
 import Participants from './components/Participants';
 import Results from './components/Results';
 
+//Helpers
+import { countResults } from './helpers/helpers';
+
 import { withStyles } from '@material-ui/core/styles';
 
-function TabContainer({ children, noPadding }) {
+const TabContainer = ({ children, noPadding }) => {
   return (
     <Typography component="div" style={ noPadding ? { padding: 0 } : { padding: 24 }}>
       {children}
@@ -211,7 +214,10 @@ class App extends Component {
           : 
           participant
         ))
-      })
+      }),
+      () => {
+        this.countFinalResults();
+      }
     );
   }
 
@@ -237,7 +243,27 @@ class App extends Component {
           : 
           participant
         ))
-      })
+      }),
+      () => {
+        this.countFinalResults();
+      }
+    );
+  }
+
+  countFinalResults = () => {
+    this.setState({
+      participants: this.state.participants.map( participant => (
+        {
+          ...participant,
+          finalResults: countResults(participant.results),
+          /*{
+            tops: countTops(participant.results), // STILL TO FIX
+            zones: count
+          },*/
+        }
+      )),
+    },
+    () => { console.log(this.state); }
     );
   }
 
