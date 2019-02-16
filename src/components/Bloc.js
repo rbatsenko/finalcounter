@@ -23,7 +23,7 @@ const styles = theme => ({
   }
 });
 
-const Bloc = ({ participants, blocNr, classes, checkZone, checkTop }) => (
+const Bloc = ({ participants, blocNr, classes, checkZone, checkTop, addZoneAttempt, removeZoneAttempt, addTopAttempt, removeTopAttempt }) => (
   <Table>
     <TableHead>
       <TableRow>
@@ -58,19 +58,33 @@ const Bloc = ({ participants, blocNr, classes, checkZone, checkTop }) => (
           </TableCell>
           <TableCell align="center" className={classes.cellBigFont}>
             {participant.results[blocNr].attTop}
-            <IconButton aria-label="Add attempt" className={classes.attIcon}>
+            <IconButton
+              aria-label="Add attempt"
+              className={classes.attIcon}
+              onClick={() => { addTopAttempt(participant.id, blocNr) }}
+            >
               <AddIcon color="primary" fontSize="default" />
             </IconButton>
-            <IconButton aria-label="Remove attempt">
+            <IconButton
+              aria-label="Remove attempt"
+              onClick={() => { removeTopAttempt(participant.id, blocNr) }}
+            >
               <RemoveIcon color="primary" fontSize="default" />
             </IconButton>
           </TableCell>
           <TableCell align="center" className={classes.cellBigFont}>
             {participant.results[blocNr].attZone}
-            <IconButton aria-label="Add attempt" className={classes.attIcon}>
+            <IconButton
+              aria-label="Add attempt"
+              className={classes.attIcon}
+              onClick={() => { addZoneAttempt(participant.id, blocNr) }}
+            >
               <AddIcon color="primary" fontSize="default" />
             </IconButton>
-            <IconButton aria-label="Remove attempt">
+            <IconButton
+              aria-label="Remove attempt"
+              onClick={() => { removeZoneAttempt(participant.id, blocNr) }}
+            >
               <RemoveIcon color="primary" fontSize="default" />
             </IconButton>
           </TableCell>

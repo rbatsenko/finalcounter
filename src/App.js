@@ -205,7 +205,8 @@ class App extends Component {
               ?
               {
                 ...bloc, // leave rest of bloc results as they are
-                zone: checked // change value
+                zone: checked, // change value
+                attZone: bloc.attZone === 0 && checked ? 1 : bloc.attZone
               }
               :
               bloc
@@ -234,7 +235,124 @@ class App extends Component {
               ?
               {
                 ...bloc, // leave rest of bloc results as they are
-                top: checked // change value
+                top: checked, // change value
+                attTop: bloc.attTop === 0 && checked ? 1 : bloc.attTop
+              }
+              :
+              bloc
+            ))
+          }
+          : 
+          participant
+        ))
+      }),
+      () => {
+        this.countFinalResults();
+      }
+    );
+  }
+
+  handleAddZoneAttempt = (id, blocNr) => { // Add or remove zone attempts
+    this.setState( 
+      prevState => ({
+        participants: prevState.participants.map( participant => (
+          participant.id === id // modify participant with proper id
+          ? 
+          {
+            ...participant, // leave rest of participants as they are
+            results: participant.results.map( bloc => (
+              bloc.nr === blocNr // modify results for bloc with proper number
+              ?
+              {
+                ...bloc, // leave rest of bloc results as they are
+                attZone: bloc.attZone + 1 // change value
+              }
+              :
+              bloc
+            ))
+          }
+          : 
+          participant
+        ))
+      }),
+      () => {
+        this.countFinalResults();
+      }
+    );
+  }
+
+  handleRemoveZoneAttempt = (id, blocNr) => { // Add or remove zone attempts
+    this.setState( 
+      prevState => ({
+        participants: prevState.participants.map( participant => (
+          participant.id === id // modify participant with proper id
+          ? 
+          {
+            ...participant, // leave rest of participants as they are
+            results: participant.results.map( bloc => (
+              bloc.nr === blocNr // modify results for bloc with proper number
+              ?
+              {
+                ...bloc, // leave rest of bloc results as they are
+                attZone: bloc.attZone > 0 ? bloc.attZone - 1 : bloc.attZone // change value
+              }
+              :
+              bloc
+            ))
+          }
+          : 
+          participant
+        ))
+      }),
+      () => {
+        this.countFinalResults();
+      }
+    );
+  }
+
+  handleAddTopAttempt = (id, blocNr) => { // Add or remove zone attempts
+    this.setState( 
+      prevState => ({
+        participants: prevState.participants.map( participant => (
+          participant.id === id // modify participant with proper id
+          ? 
+          {
+            ...participant, // leave rest of participants as they are
+            results: participant.results.map( bloc => (
+              bloc.nr === blocNr // modify results for bloc with proper number
+              ?
+              {
+                ...bloc, // leave rest of bloc results as they are
+                attTop: bloc.attTop + 1 // change value
+              }
+              :
+              bloc
+            ))
+          }
+          : 
+          participant
+        ))
+      }),
+      () => {
+        this.countFinalResults();
+      }
+    );
+  }
+
+  handleRemoveTopAttempt = (id, blocNr) => { // Add or remove zone attempts
+    this.setState( 
+      prevState => ({
+        participants: prevState.participants.map( participant => (
+          participant.id === id // modify participant with proper id
+          ? 
+          {
+            ...participant, // leave rest of participants as they are
+            results: participant.results.map( bloc => (
+              bloc.nr === blocNr // modify results for bloc with proper number
+              ?
+              {
+                ...bloc, // leave rest of bloc results as they are
+                attTop: bloc.attTop > 0 ? bloc.attTop - 1 : bloc.attTop // change value
               }
               :
               bloc
@@ -258,7 +376,13 @@ class App extends Component {
           finalResults: countResults(participant.results),
         }
       )),
-    });
+    },
+    () => {
+      this.setState({
+        viewResults: this.state.participants.sort((a, b) => b.finalResults.tops - a.finalResults.tops),
+      })
+    },
+    console.log(this.state)); // FIIIIIIXXXXXXXXXXX
   }
 
   render() {
@@ -303,10 +427,10 @@ class App extends Component {
               }>
                 <Paper>
                   { activeTab === 0 && <TabContainer><Participants participants={participants} deleteParticipant={this.handleRemoveParticipant} changeParticipant={this.handleChangeParticipant} /></TabContainer> }
-                  { activeTab === 1 && <TabContainer noPadding><Bloc participants={participants} blocNr={0} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} /></TabContainer> }
-                  { activeTab === 2 && <TabContainer noPadding><Bloc participants={participants} blocNr={1} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} /></TabContainer> }
-                  { activeTab === 3 && <TabContainer noPadding><Bloc participants={participants} blocNr={2} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} /></TabContainer> }
-                  { activeTab === 4 && <TabContainer noPadding><Bloc participants={participants} blocNr={3} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} /></TabContainer> }
+                  { activeTab === 1 && <TabContainer noPadding><Bloc participants={participants} blocNr={0} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
+                  { activeTab === 2 && <TabContainer noPadding><Bloc participants={participants} blocNr={1} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
+                  { activeTab === 3 && <TabContainer noPadding><Bloc participants={participants} blocNr={2} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
+                  { activeTab === 4 && <TabContainer noPadding><Bloc participants={participants} blocNr={3} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
                   { activeTab === 5 && <TabContainer noPadding><Results participants={participants} /></TabContainer> }
                 </Paper>
                 <div className={classes.addBtnContainer}>
