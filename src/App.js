@@ -256,15 +256,9 @@ class App extends Component {
         {
           ...participant,
           finalResults: countResults(participant.results),
-          /*{
-            tops: countTops(participant.results), // STILL TO FIX
-            zones: count
-          },*/
         }
       )),
-    },
-    () => { console.log(this.state); }
-    );
+    });
   }
 
   render() {
