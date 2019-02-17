@@ -377,12 +377,14 @@ class App extends Component {
         }
       )),
     },
-    () => {
+    /*() => {
       this.setState({
         viewResults: this.state.participants.sort((a, b) => b.finalResults.tops - a.finalResults.tops),
       })
     },
     console.log(this.state)); // FIIIIIIXXXXXXXXXXX
+    */
+    )
   }
 
   render() {
