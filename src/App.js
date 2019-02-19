@@ -394,7 +394,7 @@ class App extends Component {
   sortParticipants = () => {
     this.setState({
       ...this.state,
-      participantsSorted: this.state.participants.sort((a, b) => 
+      participantsSorted: [...this.state.participants].sort((a, b) => 
         b.finalResults.tops - a.finalResults.tops
         || 
         b.finalResults.zones - a.finalResults.zones
