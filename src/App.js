@@ -39,6 +39,10 @@ const styles = theme => ({
   logo: {
     flexGrow: 1,
   },
+  logoLink: {
+    color: 'white',
+    textDecoration: 'none',
+  },
   layout: {
     width: 'auto',
     marginLeft: theme.spacing.unit * 3,
@@ -114,6 +118,7 @@ class App extends Component {
     activeTab: 0,
     addBtnShown: true,
     participants: [],
+    participantsSorted: [],
   };
 
   handleChangeTab = (event, activeTab) => {
@@ -377,19 +382,28 @@ class App extends Component {
         }
       )),
     },
-    /*() => {
-      this.setState({
-        viewResults: this.state.participants.sort((a, b) => b.finalResults.tops - a.finalResults.tops),
-      })
+    this.sortParticipants());
+  }
+
+  sortParticipants = () => {
+    this.setState({
+      ...this.state,
+      participantsSorted: this.state.participants.sort((a, b) => 
+        b.finalResults.tops - a.finalResults.tops
+        || 
+        b.finalResults.zones - a.finalResults.zones
+        || 
+        a.finalResults.attTops - b.finalResults.attTops
+        || 
+        a.finalResults.attZones - b.finalResults.attZones
+      ),
     },
-    console.log(this.state)); // FIIIIIIXXXXXXXXXXX
-    */
-    )
+    console.log(this.state));
   }
 
   render() {
     const { classes } = this.props;
-    const { activeTab, addBtnShown, participants } = this.state;
+    const { activeTab, addBtnShown, participants, participantsSorted } = this.state;
 
     return (
       <React.Fragment>
@@ -397,7 +411,9 @@ class App extends Component {
         <AppBar position="static" className={classes.appBar}>
           <Toolbar>
             <Typography variant="h6" color="inherit" noWrap className={classes.logo}>
-              <span role="img" aria-label="Final Counter Logo">👑</span> Final Counter
+              <a className={classes.logoLink} href='/' title="Final Counter">
+                <span role="img" aria-label="Final Counter Logo">👑</span> Final Counter
+              </a>
             </Typography>
           </Toolbar>
         </AppBar>
@@ -433,7 +449,7 @@ class App extends Component {
                   { activeTab === 2 && <TabContainer noPadding><Bloc participants={participants} blocNr={1} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
                   { activeTab === 3 && <TabContainer noPadding><Bloc participants={participants} blocNr={2} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
                   { activeTab === 4 && <TabContainer noPadding><Bloc participants={participants} blocNr={3} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
-                  { activeTab === 5 && <TabContainer noPadding><Results participants={participants} /></TabContainer> }
+                  { activeTab === 5 && <TabContainer noPadding><Results participants={participantsSorted} /></TabContainer> }
                 </Paper>
                 <div className={classes.addBtnContainer}>
                   <Zoom in={addBtnShown} mountOnEnter unmountOnExit>

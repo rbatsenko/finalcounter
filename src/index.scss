@@ -17,3 +17,13 @@ table tbody tr:last-child th,
 table tbody tr:last-child td {
   border-bottom: none;
 }
+
+.bloc-table,
+.results-table {
+  th,
+  td {
+    @media (max-width: 992px) {
+      padding: 0 15px;
+    }
+  }
+}

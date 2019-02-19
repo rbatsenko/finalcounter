@@ -24,7 +24,7 @@ const styles = theme => ({
 });
 
 const Bloc = ({ participants, blocNr, classes, checkZone, checkTop, addZoneAttempt, removeZoneAttempt, addTopAttempt, removeTopAttempt }) => (
-  <Table>
+  <Table className="bloc-table">
     <TableHead>
       <TableRow>
         <TableCell>Name</TableCell>

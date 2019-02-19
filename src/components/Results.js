@@ -17,7 +17,7 @@ const styles = theme => ({
 });
 
 const Results = ({ participants, classes }) => (
-  <Table>
+  <Table className="results-table">
     <TableHead>
       <TableRow>
         <TableCell>Name</TableCell>
