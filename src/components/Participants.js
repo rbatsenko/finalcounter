@@ -12,7 +12,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 const Participants = ({ participants, deleteParticipant, changeParticipant }) => (
   <React.Fragment>
     <Typography variant="h6">Participants</Typography>
-    <List>
+    <List
+      style={{
+        paddingTop: 0,
+        paddingBottom: 0,
+      }}
+    >
     {
       participants.length > 0 &&
       participants.map( participant =>

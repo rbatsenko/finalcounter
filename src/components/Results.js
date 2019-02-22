@@ -14,9 +14,17 @@ const styles = theme => ({
   cellBigFont: {
     fontSize: '1.5rem',
   },
+  noParticipantsMessage: {
+    padding: 24,
+    textAlign: 'center',
+    fontSize: '1.25em',
+    lineHeight: '32px',
+  },
 });
 
 const Results = ({ participants, classes }) => (
+  participants.length > 0
+  ?
   <Table className="results-table">
     <TableHead>
       <TableRow>
@@ -41,6 +49,8 @@ const Results = ({ participants, classes }) => (
       ))}
     </TableBody>
   </Table>
+  :
+  <div className={classes.noParticipantsMessage}>Please add participants to be able to count attempts</div>
 );
 
 export default withStyles(styles)(Results);

@@ -187,13 +187,21 @@ class App extends Component {
           attZones: 0,
         },
       }]
-    }));
+    }),
+    () => { 
+      this.sortParticipants();
+    }
+    );
   }
 
   handleRemoveParticipant = id => {
     this.setState( prevState => ({
       participants: [...prevState.participants].filter( participant => participant.id !== id)
-    }));
+    }),
+    () => { 
+      this.sortParticipants();
+    }
+    );
   }
 
   handleChangeParticipant = (id, newName) => {

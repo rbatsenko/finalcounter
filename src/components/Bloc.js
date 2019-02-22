@@ -20,10 +20,18 @@ const styles = theme => ({
   },
   attIcon: {
     marginLeft: 15,
-  }
+  },
+  noParticipantsMessage: {
+    padding: 24,
+    textAlign: 'center',
+    fontSize: '1.25em',
+    lineHeight: '32px',
+  },
 });
 
 const Bloc = ({ participants, blocNr, classes, checkZone, checkTop, addZoneAttempt, removeZoneAttempt, addTopAttempt, removeTopAttempt }) => (
+  participants.length > 0
+  ?
   <Table className="bloc-table">
     <TableHead>
       <TableRow>
@@ -92,6 +100,8 @@ const Bloc = ({ participants, blocNr, classes, checkZone, checkTop, addZoneAttem
       ))}
     </TableBody>
   </Table>
+  :
+  <div className={classes.noParticipantsMessage}>Please add participants to be able to count attempts</div>
 );
 
 export default withStyles(styles)(Bloc);
