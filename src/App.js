@@ -233,7 +233,11 @@ class App extends Component {
         : 
         participant
       )),
-    }));
+    }),
+    () => { 
+      this.sortParticipants();
+    }
+    );
   }
 
   handleCheckZone = (id, blocNr, checked) => {
