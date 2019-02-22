@@ -1,6 +1,7 @@
 {
   "short_name": "Final Counter",
   "name": "Final Counter",
+  "description": "Climbing competition finals results counter",
   "icons": [
     {
       "src": "favicon.ico",
