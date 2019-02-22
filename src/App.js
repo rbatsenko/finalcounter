@@ -234,7 +234,7 @@ class App extends Component {
         participant
       )),
     }),
-    () => { 
+    () => {
       this.sortParticipants();
     }
     );
