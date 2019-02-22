@@ -6,6 +6,10 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { pink } from '@material-ui/core/colors';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import * as serviceWorker from './serviceWorker';
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('UA-135042632-1');
+ReactGA.pageview('/');
 
 const theme = createMuiTheme({
   palette: {
