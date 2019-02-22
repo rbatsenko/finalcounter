@@ -39,6 +39,11 @@ const styles = theme => ({
   logoLink: {
     color: 'white',
     textDecoration: 'none',
+    fontWeight: 700,
+  },
+  logoCrown: {
+    fontSize: '1.25em',
+    marginRight: 5,
   },
   grow: {
     flexGrow: 1,
@@ -95,6 +100,9 @@ const styles = theme => ({
     borderBottom: '1px solid #e8e8e8',
     marginBottom: theme.spacing.unit * 3,
     overflow: 'visible',
+    '& button': {
+      fontFamily: '"Sarabun", "Roboto", "Segoe UI", "Helvetica Neue", sans-serif !important',
+    }
   },
   tabScroller: {
     overflowX: 'visible',
@@ -421,7 +429,7 @@ class App extends Component {
           <Toolbar>
             <Typography variant="h6" color="inherit" noWrap>
               <a className={classes.logoLink} href='/' title="Final Counter">
-                <span role="img" aria-label="Final Counter Logo">👑</span> Final Counter
+                <span className={classes.logoCrown} role="img" aria-label="Final Counter Logo">👑</span> Final Counter
               </a>
             </Typography>
             <div className={classes.grow} />
