@@ -23,13 +23,11 @@ const theme = createMuiTheme({
   },
 });
 
-function Root() {
-  return (
-    <MuiThemeProvider theme={theme}>
-      <App theme={theme} />
-    </MuiThemeProvider>
-  );
-}
+const Root = () => (
+  <MuiThemeProvider theme={theme}>
+    <App theme={theme} />
+  </MuiThemeProvider>
+);
 
 ReactDOM.render(
   <Root />
