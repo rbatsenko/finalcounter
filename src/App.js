@@ -299,7 +299,7 @@ class App extends Component {
     );
   }
 
-  handleAddZoneAttempt = (id, blocNr) => { // Add or remove zone attempts
+  handleAddZoneAttempt = (id, blocNr) => { // Add zone attempts
     this.setState( 
       prevState => ({
         participants: prevState.participants.map( participant => (
@@ -328,7 +328,7 @@ class App extends Component {
     );
   }
 
-  handleRemoveZoneAttempt = (id, blocNr) => { // Add or remove zone attempts
+  handleRemoveZoneAttempt = (id, blocNr) => { // Remove zone attempts
     this.setState( 
       prevState => ({
         participants: prevState.participants.map( participant => (
@@ -357,7 +357,7 @@ class App extends Component {
     );
   }
 
-  handleAddTopAttempt = (id, blocNr) => { // Add or remove zone attempts
+  handleAddTopAttempt = (id, blocNr) => { // Add top attempts
     this.setState( 
       prevState => ({
         participants: prevState.participants.map( participant => (
@@ -386,7 +386,7 @@ class App extends Component {
     );
   }
 
-  handleRemoveTopAttempt = (id, blocNr) => { // Add or remove zone attempts
+  handleRemoveTopAttempt = (id, blocNr) => { // Remove top attempts
     this.setState( 
       prevState => ({
         participants: prevState.participants.map( participant => (
