@@ -3,7 +3,7 @@
 - Real-time counting and sorting final results
 - Storing your latest counted results and participants between browser sessions
 
-### Available Scripts
+## Available Scripts
 
 In the project directory, you can run:
 
