@@ -1,3 +1,8 @@
+## Final Counter Features
+- Beautiful pink color 🤐
+- Real-time counting and sorting final results
+- Storing your latest counted results and participants between browser sessions
+
 ## Available Scripts
 
 In the project directory, you can run:
