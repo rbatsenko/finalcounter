@@ -124,12 +124,16 @@ const styles = theme => ({
 });
 
 class App extends Component {
-  state = {
-    activeTab: 0,
-    addBtnShown: true,
-    participants: [],
-    participantsSorted: [],
-  };
+  constructor() {
+    super();
+    
+    this.state = {
+      activeTab: 0,
+      addBtnShown: true,
+      participants: [],
+      participantsSorted: [],
+    };
+  }
 
   hydrateStateWithLocalStorage() {
     for (let key in this.state) {
