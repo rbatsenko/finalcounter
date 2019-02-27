@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
-import App from './App';
+import AppWrapper from './AppWrapper';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { pink } from '@material-ui/core/colors';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
@@ -25,7 +25,7 @@ const theme = createMuiTheme({
 
 const Root = () => (
   <MuiThemeProvider theme={theme}>
-    <App theme={theme} />
+    <AppWrapper />
   </MuiThemeProvider>
 );
 

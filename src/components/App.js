@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -10,13 +9,13 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 //Custom Components
-import Navbar from './components/Navbar';
-import Bloc from './components/Bloc';
-import Participants from './components/Participants';
-import Results from './components/Results';
+
+import Bloc from './Bloc';
+import Participants from './Participants';
+import Results from './Results';
 
 //Helpers
-import { countResults } from './helpers/helpers';
+import { countResults } from '../helpers/helpers';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -126,7 +125,7 @@ const styles = theme => ({
 class App extends Component {
   constructor() {
     super();
-    
+
     this.state = {
       activeTab: 0,
       addBtnShown: true,
@@ -476,55 +475,51 @@ class App extends Component {
     const { activeTab, addBtnShown, participants, participantsSorted } = this.state;
 
     return (
-      <React.Fragment>
-        <CssBaseline />
-        <Navbar />
-        <main>
-          <Tabs
-            value={activeTab}
-            variant="fullWidth"
-            scrollButtons="auto"
-            indicatorColor="primary"
-            textColor="primary"
-            onChange={this.handleChangeTab}
-            classes={{
-              indicator: classes.tabIndicator,
-              root: classes.tabsNav,
-              scroller: classes.tabScroller,
-            }}
-          >
-            <Tab label="Participants" className={classes.label} />
-            <Tab label="Bloc #1" className={classes.label} />
-            <Tab label="Bloc #2" className={classes.label} />
-            <Tab label="Bloc #3" className={classes.label} />
-            <Tab label="Bloc #4" className={classes.label} />
-            <Tab label="Results" className={classes.label} />
-          </Tabs>
-          <div className={classes.layout}>
-            <Grid container spacing={24}>
-              <Grid item xs={12} className={
-                `${classes.transition} ${activeTab === 0 ? classes.colHalf : ''} ${activeTab === 5 ? classes.colThreeFourth : ''}`
-              }>
-                <Paper>
-                  { activeTab === 0 && <TabContainer><Participants participants={participants} deleteParticipant={this.handleRemoveParticipant} changeParticipant={this.handleChangeParticipant} /></TabContainer> }
-                  { activeTab === 1 && <TabContainer noPadding><Bloc participants={participants} blocNr={0} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
-                  { activeTab === 2 && <TabContainer noPadding><Bloc participants={participants} blocNr={1} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
-                  { activeTab === 3 && <TabContainer noPadding><Bloc participants={participants} blocNr={2} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
-                  { activeTab === 4 && <TabContainer noPadding><Bloc participants={participants} blocNr={3} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
-                  { activeTab === 5 && <TabContainer noPadding><Results participants={participantsSorted} /></TabContainer> }
-                </Paper>
-                <div className={classes.addBtnContainer}>
-                  <Zoom in={addBtnShown} mountOnEnter unmountOnExit>
-                    <Fab size="medium" color="primary" aria-label="Add" onClick={this.handleAddParticipant}>
-                      <AddIcon />
-                    </Fab>
-                  </Zoom>
-                </div>
-              </Grid>
+      <main>
+        <Tabs
+          value={activeTab}
+          variant="fullWidth"
+          scrollButtons="auto"
+          indicatorColor="primary"
+          textColor="primary"
+          onChange={this.handleChangeTab}
+          classes={{
+            indicator: classes.tabIndicator,
+            root: classes.tabsNav,
+            scroller: classes.tabScroller,
+          }}
+        >
+          <Tab label="Participants" className={classes.label} />
+          <Tab label="Bloc #1" className={classes.label} />
+          <Tab label="Bloc #2" className={classes.label} />
+          <Tab label="Bloc #3" className={classes.label} />
+          <Tab label="Bloc #4" className={classes.label} />
+          <Tab label="Results" className={classes.label} />
+        </Tabs>
+        <div className={classes.layout}>
+          <Grid container spacing={24}>
+            <Grid item xs={12} className={
+              `${classes.transition} ${activeTab === 0 ? classes.colHalf : ''} ${activeTab === 5 ? classes.colThreeFourth : ''}`
+            }>
+              <Paper>
+                { activeTab === 0 && <TabContainer><Participants participants={participants} deleteParticipant={this.handleRemoveParticipant} changeParticipant={this.handleChangeParticipant} /></TabContainer> }
+                { activeTab === 1 && <TabContainer noPadding><Bloc participants={participants} blocNr={0} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
+                { activeTab === 2 && <TabContainer noPadding><Bloc participants={participants} blocNr={1} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
+                { activeTab === 3 && <TabContainer noPadding><Bloc participants={participants} blocNr={2} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
+                { activeTab === 4 && <TabContainer noPadding><Bloc participants={participants} blocNr={3} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
+                { activeTab === 5 && <TabContainer noPadding><Results participants={participantsSorted} /></TabContainer> }
+              </Paper>
+              <div className={classes.addBtnContainer}>
+                <Zoom in={addBtnShown} mountOnEnter unmountOnExit>
+                  <Fab size="medium" color="primary" aria-label="Add" onClick={this.handleAddParticipant}>
+                    <AddIcon />
+                  </Fab>
+                </Zoom>
+              </div>
             </Grid>
-          </div>
-        </main>
-      </React.Fragment>
+          </Grid>
+        </div>
+      </main>
     );
   }
 }
