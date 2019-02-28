@@ -9,13 +9,9 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 //Custom Components
-
 import Bloc from './Bloc';
 import Participants from './Participants';
 import Results from './Results';
-
-//Helpers
-import { countResults } from '../helpers/helpers';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -130,7 +126,6 @@ class App extends Component {
       activeTab: 0,
       addBtnShown: true,
       participants: [],
-      participantsSorted: [],
     };
   }
 
@@ -209,21 +204,13 @@ class App extends Component {
           attZones: 0,
         },
       }]
-    }),
-    () => { 
-      this.sortParticipants();
-    }
-    );
+    }));
   }
 
   handleRemoveParticipant = id => {
     this.setState( prevState => ({
       participants: [...prevState.participants].filter( participant => participant.id !== id)
-    }),
-    () => { 
-      this.sortParticipants();
-    }
-    );
+    }));
   }
 
   handleChangeParticipant = (id, newName) => {
@@ -235,11 +222,7 @@ class App extends Component {
         : 
         participant
       )),
-    }),
-    () => {
-      this.sortParticipants();
-    }
-    );
+    }));
   }
 
   handleCheckZone = (id, blocNr, checked) => {
@@ -265,10 +248,7 @@ class App extends Component {
           : 
           participant
         ))
-      }),
-      () => {
-        this.countFinalResults();
-      }
+      })
     );
   }
 
@@ -295,10 +275,7 @@ class App extends Component {
           : 
           participant
         ))
-      }),
-      () => {
-        this.countFinalResults();
-      }
+      })
     );
   }
 
@@ -324,10 +301,7 @@ class App extends Component {
           : 
           participant
         ))
-      }),
-      () => {
-        this.countFinalResults();
-      }
+      })
     );
   }
 
@@ -353,10 +327,7 @@ class App extends Component {
           : 
           participant
         ))
-      }),
-      () => {
-        this.countFinalResults();
-      }
+      })
     );
   }
 
@@ -382,10 +353,7 @@ class App extends Component {
           : 
           participant
         ))
-      }),
-      () => {
-        this.countFinalResults();
-      }
+      })
     );
   }
 
@@ -411,44 +379,7 @@ class App extends Component {
           : 
           participant
         ))
-      }),
-      () => {
-        this.countFinalResults();
-      }
-    );
-  }
-
-  countFinalResults = () => {
-    this.setState({
-      participants: this.state.participants.map( participant => (
-        {
-          ...participant,
-          finalResults: countResults(participant.results),
-        }
-      )),
-    },
-    () => { 
-      this.sortParticipants();
-    }
-    );
-  }
-
-  sortParticipants = () => {
-    this.setState({
-      ...this.state,
-      participantsSorted: [...this.state.participants].sort((a, b) => 
-        b.finalResults.tops - a.finalResults.tops
-        || 
-        b.finalResults.zones - a.finalResults.zones
-        || 
-        a.finalResults.attTops - b.finalResults.attTops
-        || 
-        a.finalResults.attZones - b.finalResults.attZones
-      ),
-    },
-    () => {
-      console.log(this.state);
-    }
+      })
     );
   }
 
@@ -472,7 +403,7 @@ class App extends Component {
 
   render() {
     const { classes } = this.props;
-    const { activeTab, addBtnShown, participants, participantsSorted } = this.state;
+    const { activeTab, addBtnShown, participants } = this.state;
 
     return (
       <main>
@@ -507,7 +438,7 @@ class App extends Component {
                 { activeTab === 2 && <TabContainer noPadding><Bloc participants={participants} blocNr={1} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
                 { activeTab === 3 && <TabContainer noPadding><Bloc participants={participants} blocNr={2} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
                 { activeTab === 4 && <TabContainer noPadding><Bloc participants={participants} blocNr={3} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
-                { activeTab === 5 && <TabContainer noPadding><Results participants={participantsSorted} /></TabContainer> }
+                { activeTab === 5 && <TabContainer noPadding><Results participants={participants} /></TabContainer> }
               </Paper>
               <div className={classes.addBtnContainer}>
                 <Zoom in={addBtnShown} mountOnEnter unmountOnExit>

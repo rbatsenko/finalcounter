@@ -5,6 +5,7 @@ export const countResults = (results, counterTops = 0, counterZones = 0) => {
     if (result.zone === true)
       counterZones++;
   });
+  
   return ({
     tops: counterTops,
     zones: counterZones,
