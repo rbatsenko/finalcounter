@@ -31,5 +31,9 @@ table tbody tr:last-child td {
     @media (max-width: 992px) {
       padding: 0 15px;
     }
+
+    @media (max-width: 599.95px) {
+      padding: 0 10px;
+    }
   }
 }

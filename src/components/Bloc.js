@@ -20,6 +20,14 @@ const styles = theme => ({
   },
   attIcon: {
     marginLeft: 15,
+    [theme.breakpoints.down(560)]: {
+      padding: 0,
+    },
+  },
+  attNoPaddingOnSmaller: {
+    [theme.breakpoints.down(560)]: {
+      padding: 0,
+    },
   },
   noParticipantsMessage: {
     padding: 24,
@@ -50,6 +58,7 @@ const Bloc = ({ participants, blocNr, classes, checkZone, checkTop, addZoneAttem
           </TableCell>
           <TableCell align="center" className={classes.cellBigFont}>
             <Checkbox
+              className={classes.attNoPaddingOnSmaller}
               checked={participant.results[blocNr].top}
               onChange={(e) => { checkTop(participant.id, blocNr, e.target.checked) }}
               value="Top"
@@ -58,6 +67,7 @@ const Bloc = ({ participants, blocNr, classes, checkZone, checkTop, addZoneAttem
           </TableCell>
           <TableCell align="center" className={classes.cellBigFont}>
             <Checkbox
+              className={classes.attNoPaddingOnSmaller}
               checked={participant.results[blocNr].zone}
               onChange={(e) => { checkZone(participant.id, blocNr, e.target.checked) }}
               value="Zone"
@@ -75,6 +85,7 @@ const Bloc = ({ participants, blocNr, classes, checkZone, checkTop, addZoneAttem
             </IconButton>
             <IconButton
               aria-label="Remove attempt"
+              className={classes.attNoPaddingOnSmaller}
               onClick={() => { removeTopAttempt(participant.id, blocNr) }}
             >
               <RemoveIcon color="primary" fontSize="default" />

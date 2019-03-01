@@ -49,16 +49,16 @@ const styles = theme => ({
     width: 'auto',
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
-    /*[theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
-      width: 1100,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },*/
   },
   paper: {
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
+  },
+  mainGridItem: {
+    [theme.breakpoints.down(768)]: {
+      padding: '0 !important',
+    },
   },
   colHalf: {
     maxWidth: '50%',
@@ -103,6 +103,9 @@ const styles = theme => ({
   },
   label: {
     minHeight: theme.spacing.unit * 8,
+    [theme.breakpoints.down(560)]: {
+      fontSize: '.75rem',
+    },
   },
   tabIndicator: {
     height: 5,
@@ -436,7 +439,7 @@ class App extends Component {
         <div className={classes.layout}>
           <Grid container spacing={24}>
             <Grid item xs={12} className={
-              `${classes.transition} ${activeTab === 0 ? classes.colHalf : ''} ${activeTab === 5 ? classes.colThreeFourth : ''}`
+              `${classes.mainGridItem} ${classes.transition} ${activeTab === 0 ? classes.colHalf : ''} ${activeTab === 5 ? classes.colThreeFourth : ''}`
             }>
               <Paper>
                 { activeTab === 0 && <TabContainer><Participants participants={participants} deleteParticipant={this.handleRemoveParticipant} changeParticipant={this.handleChangeParticipant} ref={this.partRef} /></TabContainer> }
