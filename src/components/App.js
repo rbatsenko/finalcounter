@@ -127,6 +127,8 @@ class App extends Component {
       addBtnShown: true,
       participants: [],
     };
+
+    this.myRef = React.createRef();
   }
 
   hydrateStateWithLocalStorage() {
@@ -204,7 +206,11 @@ class App extends Component {
           attZones: 0,
         },
       }]
-    }));
+    }),
+    () => {
+      this.myRef.current.focus();
+    }
+    );
   }
 
   handleRemoveParticipant = id => {
@@ -433,7 +439,7 @@ class App extends Component {
               `${classes.transition} ${activeTab === 0 ? classes.colHalf : ''} ${activeTab === 5 ? classes.colThreeFourth : ''}`
             }>
               <Paper>
-                { activeTab === 0 && <TabContainer><Participants participants={participants} deleteParticipant={this.handleRemoveParticipant} changeParticipant={this.handleChangeParticipant} /></TabContainer> }
+                { activeTab === 0 && <TabContainer><Participants participants={participants} deleteParticipant={this.handleRemoveParticipant} changeParticipant={this.handleChangeParticipant} ref={this.myRef} /></TabContainer> }
                 { activeTab === 1 && <TabContainer noPadding><Bloc participants={participants} blocNr={0} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
                 { activeTab === 2 && <TabContainer noPadding><Bloc participants={participants} blocNr={1} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
                 { activeTab === 3 && <TabContainer noPadding><Bloc participants={participants} blocNr={2} checkZone={this.handleCheckZone} checkTop={this.handleCheckTop} addZoneAttempt={this.handleAddZoneAttempt} removeZoneAttempt={this.handleRemoveZoneAttempt} addTopAttempt={this.handleAddTopAttempt} removeTopAttempt={this.handleRemoveTopAttempt} /></TabContainer> }
