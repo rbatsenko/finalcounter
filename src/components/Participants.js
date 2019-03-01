@@ -26,8 +26,8 @@ const Participants = ({ participants, deleteParticipant, changeParticipant }) =>
             <AccountCircleIcon style={{ width: 32, height: 32 }} />
           </ListItemIcon>
           <TextField
-            id="name"
             defaultValue={participant.name}
+            autoFocus
             onChange={(e) => { changeParticipant(participant.id, e.target.value) }}
             margin="dense"
           />

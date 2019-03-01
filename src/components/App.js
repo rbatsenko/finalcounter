@@ -166,7 +166,7 @@ class App extends Component {
     this.setState( prevState => ({
       participants: [...prevState.participants, {
         id: prevState.participants.length === 0 ? 0 : prevState.participants[prevState.participants.length - 1].id + 1, // generate id based on last one
-        name: 'Name Surname',
+        name: '',
         results: [
           {
             nr: 0,
